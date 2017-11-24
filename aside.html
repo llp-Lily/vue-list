@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+</head>
+<style>
+    *{
+        list-style: none;
+    }
+    h3{
+        cursor: pointer;
+        color: blue;
+    }
+</style>
+<body>
+<div id="box">
+    <navlist v-bind:con="con"></navlist>
+</div>
+<script>
+    Vue.component('navlist',{
+        props:["con"],
+        template:`<div>
+                        <ul v-for="item in con">
+                            <h3 v-on:click="show(item)">{{item['title']}}</h3>
+                            <li v-for="son in item['arr']" v-show="!item['hide']">{{son}}</li>
+                        </ul>
+                   </div>`,
+        methods:{
+            show:function (item) {
+                item.hide=!item.hide;
+            }
+        }
+    });
+    new Vue({
+        el:"#box",
+        data:{
+            con:[
+                {title:'教程',arr:['基础','工具'],hide:false},
+                {title:'API',arr:['全局配置','选项 / 数据','选项 / 资源'],hide:false},
+                {title:'实例',arr:['网格组件','SVG 图表'],hide:false}
+            ]
+        }
+    })
+</script>
+</body>
+</html>
